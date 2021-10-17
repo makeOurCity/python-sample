@@ -22,12 +22,12 @@ def main():
         client_id=os.getenv("APP_CLIENT_ID"),
     )
 
-    tokens = c.signin(
+    c.signin(
         username=os.getenv("USERNAME"),
         password=os.getenv("PASSWORD")
     )
 
-    print(tokens)
+    print(f"idToken: {c.id_token}")
     
 if __name__ == '__main__':
     main()
