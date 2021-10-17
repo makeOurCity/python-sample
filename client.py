@@ -1,4 +1,5 @@
 
+from warrant.aws_srp import AWSSRP
 
 class Client:
     client = None
@@ -12,14 +13,14 @@ class Client:
         self.client_id = client_id
 
     def signin(self, username: str, password: str):
-        res = self.client.admin_initiate_auth(
-            UserPoolId = self.user_pool_id,
-            ClientId = self.client_id,
-            AuthFlow = "ADMIN_NO_SRP_AUTH",
-            AuthParameters = {
-                "USERNAME": username,
-                "PASSWORD": password,
-            }
+        aws = AWSSRP(
+            username=username,
+            password=password,
+            pool_id=self.user_pool_id,
+            client_id=self.client_id, 
+            client=self.client,
         )
 
-        return res
+        tokens = aws.authenticate_user()    
+
+        return tokens
