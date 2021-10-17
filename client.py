@@ -58,9 +58,5 @@ class Client:
     
     def do(self, req: Request) -> Response:
         req.headers['Authorization'] = self.__id_token
-        print('do')
         req.url = urllib.parse.urljoin(self.__base_url, req.url)
-
-        print(req.headers)
-        print(req.url)
         return self.__session.send(req.prepare(), timeout=self.__timeout)
