@@ -12,7 +12,16 @@ Install dependencies and execute python script.
 
 ```console
 $ . venv/bin/activate             # Activate venv if using venv
-
 $ pip install -r requirements.txt # Install dependencies
+```
+
+Create .env file
+
+```console
+$ cp .env.example .env
+$ vi .env                 # Edit informations
+```
+
+```console
 $ python main.py                  # Execute
 ```
