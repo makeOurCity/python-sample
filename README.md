@@ -22,6 +22,8 @@ $ cp .env.example .env
 $ vi .env                 # Edit informations
 ```
 
+Execute script.
+
 ```console
 $ python main.py                  # Execute
 ```
