@@ -8,14 +8,14 @@ venv recommended. Please execute commands once like below.
 $ python3 -m venv venv  # Initialize venv
 ```
 
-Install dependencies and execute python script.
+Install dependencies.
 
 ```console
 $ . venv/bin/activate             # Activate venv if using venv
 $ pip install -r requirements.txt # Install dependencies
 ```
 
-Create .env file
+Create .env file.
 
 ```console
 $ cp .env.example .env
