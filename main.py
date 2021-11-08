@@ -2,15 +2,16 @@ import os
 from os import path
 import json
 
-import boto3 
+import boto3
 import requests
 from dotenv import load_dotenv
 
 import client
 
 
-dotenv_path = path.join(path.dirname(__file__), '.env')
+dotenv_path = path.join(path.dirname(__file__), ".env")
 load_dotenv(dotenv_path)
+
 
 def main():
     c = client.Client(
@@ -20,19 +21,16 @@ def main():
         client_id=os.getenv("APP_CLIENT_ID"),
     )
 
-    c.signin(
-        username=os.getenv("USERNAME"),
-        password=os.getenv("PASSWORD")
-    )
+    c.signin(username=os.getenv("USERNAME"), password=os.getenv("PASSWORD"))
 
-    print(f"idToken: {c.id_token}")
+    print("idToken: ", c.id_token)
 
-    resp = c.do(requests.Request('GET', "/version"))
+    resp = c.do(requests.Request("GET", "/version"))
     j = json.loads(resp.content)
     print(json.dumps(j, indent=2))
 
     print("expired:", c.is_token_expired())
-    
-    
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     main()
