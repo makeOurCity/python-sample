@@ -1,35 +1,31 @@
-import os
-from os import path
 import json
+import os
 
-import boto3
 import requests
 from dotenv import load_dotenv
+from pycognito.utils import RequestsSrpAuth
+from requests.auth import AuthBase
 
-import client
-
-
-dotenv_path = path.join(path.dirname(__file__), ".env")
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
 
-def main():
-    c = client.Client(
-        session=boto3.Session(region_name="ap-northeast-1"),
-        base_url=os.getenv("ORION_ENDPOINT"),
+def get_auth() -> AuthBase:
+    auth = RequestsSrpAuth(
+        username=os.getenv("USERNAME"),
+        password=os.getenv("PASSWORD"),
         user_pool_id=os.getenv("USER_POOL_ID"),
         client_id=os.getenv("APP_CLIENT_ID"),
+        user_pool_region=os.getenv("USER_POOL_REGION"),
     )
+    return auth
 
-    c.signin(username=os.getenv("USERNAME"), password=os.getenv("PASSWORD"))
 
-    print("idToken: ", c.id_token)
-
-    resp = c.do(requests.Request("GET", "/version"))
-    j = json.loads(resp.content)
-    print(json.dumps(j, indent=2))
-
-    print("expired:", c.is_token_expired())
+def main():
+    orion_endpoint = os.getenv("ORION_ENDPOINT")
+    auth = get_auth()
+    response = requests.get(orion_endpoint + "/version", auth=auth)
+    print(json.dumps(response.json(), indent=2))
 
 
 if __name__ == "__main__":

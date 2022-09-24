@@ -1,4 +1,4 @@
 .PHONY: freeze
 
 freeze:
-	pip freeze > requirements.txt
+	pip freeze > requirements.txt.freeze
