@@ -25,6 +25,7 @@ def main():
     orion_endpoint = os.getenv("ORION_ENDPOINT")
     auth = get_auth()
     response = requests.get(orion_endpoint + "/version", auth=auth)
+    print(f"TOKEN: {auth.cognito_client.access_token}")
     print(json.dumps(response.json(), indent=2))
 
 
